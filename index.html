@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NCT WISH RPS TEST</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body.landing {
+      background-image: url("images/Main-background.jpg");
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .credit {
+      position: absolute;
+      top: 30%;
+      left: 30%;
+      transform: translate(-50%, -50%);
+      width: 480px;
+      height: 480px;
+      background: url("images/made-by-cinta-bubble.png") no-repeat center center;
+      background-size: contain;
+    }
+
+    .title {
+      position: absolute;
+      top: 160px;
+      right: 30px;
+      font-size: 64.9px;
+      color: #f4a896; /* softened peach-orange */
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+      letter-spacing: 1px;
+      font-weight: 700;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .choice-links-horizontal {
+      position: absolute;
+      bottom: 180px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .mode-link {
+      padding: 22px 54px;
+      border-radius: 40px;
+      font-weight: bold;
+      font-size: 1.4rem;
+      text-decoration: none;
+      color: #ffffff;
+      background: linear-gradient(to right, #ffc3a0, #ffafbd);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .mode-link:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    @media (max-width: 600px) {
+      .title {
+        font-size: 2rem;
+        right: 15px;
+        top: 80px;
+      }
+
+      .credit {
+        width: 130px;
+        height: 130px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .mode-link {
+        padding: 16px 32px;
+        font-size: 1.1rem;
+      }
+
+      .choice-links-horizontal {
+        bottom: 120px;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body class="landing">
+  <span class="credit"></span>
+  <h1 class="title">NCT WISH RPS TEST</h1>
+  <div class="choice-links-horizontal">
+    <a href="sorter.html" class="mode-link">Start Full Ranking Sorter</a>
+  </div>
+</body>
+</html>
+
+

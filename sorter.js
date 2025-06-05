@@ -2,17 +2,12 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
 const supabaseUrl = 'https://bjsfuzlsunepfbezniey.supabase.co';
-const supabaseKey = 'YOUR_PUBLIC_API_KEY';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqc2Z1emxzdW5lcGZiZXpuaWV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkxMzYwMzMsImV4cCI6MjA2NDcxMjAzM30.-kjszBCPdEJHiFcFTQqLh0TUgmSj3Jo4oOb0rH336vI'; // GANTI dengan key dari Supabase
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 let pairings = [];
 let currentIndex = 0;
 let results = {};
-
-// Ambil dari URL
-const params = new URLSearchParams(window.location.search);
-localStorage.setItem("username", params.get("u") || "anonymous");
-localStorage.setItem("submission_link", params.get("s") || "");
 
 async function loadPairings() {
   const res = await fetch("pairings.json");
@@ -45,6 +40,7 @@ async function showNextPair() {
     const username = localStorage.getItem("username") || "anonymous";
     const submission_link = localStorage.getItem("submission_link") || "";
 
+    // 👇 Simpan ke Supabase
     await supabase.from('result').insert([
       {
         username,
@@ -60,6 +56,7 @@ async function showNextPair() {
   }
 
   const [leftPair, rightPair] = pairings[currentIndex];
+
   const left = document.getElementById("left-img");
   const right = document.getElementById("right-img");
 

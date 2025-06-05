@@ -1,10 +1,3 @@
-// ⬆️ Supabase client setup
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
-
-const supabaseUrl = 'https://bjsfuzlsunepfbezniey.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqc2Z1emxzdW5lcGZiZXpuaWV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkxMzYwMzMsImV4cCI6MjA2NDcxMjAzM30.-kjszBCPdEJHiFcFTQqLh0TUgmSj3Jo4oOb0rH336vI'; // GANTI dengan key dari Supabase
-const supabase = createClient(supabaseUrl, supabaseKey);
-
 let pairings = [];
 let currentIndex = 0;
 let results = {};
@@ -30,26 +23,10 @@ function shuffle(array) {
   return array.sort(() => Math.random() - 0.5);
 }
 
-async function showNextPair() {
+function showNextPair() {
   if (currentIndex >= pairings.length) {
-    const sorted = Object.entries(results)
-      .sort((a, b) => b[1] - a[1])
-      .map(entry => entry[0]);
-
-    const topChoice = sorted[0];
-    const username = localStorage.getItem("username") || "anonymous";
-    const submission_link = localStorage.getItem("submission_link") || "";
-
-    // 👇 Simpan ke Supabase
-    await supabase.from('result').insert([
-      {
-        username,
-        top_choice: topChoice,
-        ranking: sorted,
-        submission_link
-      }
-    ]);
-
+    // Sort the results object by value
+    const sorted = Object.entries(results).sort((a, b) => b[1] - a[1]).map(entry => entry[0]);
     localStorage.setItem("pairResults", JSON.stringify(sorted));
     window.location.href = "result.html";
     return;

@@ -1,0 +1,49 @@
+<script>
+    let pairings = [];
+    let results = {};
+    let leftIndex, rightIndex;
+  
+    // Load pairings from JSON
+    fetch("pairings.json")
+      .then(res => res.json())
+      .then(data => {
+        pairings = data;
+        pairings.forEach(p => results[p.name] = 0); // initialize scores
+        showNewPair();
+      });
+  
+    function showNewPair() {
+      // Randomly pick two different indexes
+      do {
+        leftIndex = Math.floor(Math.random() * pairings.length);
+        rightIndex = Math.floor(Math.random() * pairings.length);
+      } while (leftIndex === rightIndex);
+  
+      // Set images
+      const left = document.getElementById("left-img").querySelector("img");
+      const right = document.getElementById("right-img").querySelector("img");
+  
+      left.src = "images/" + pairings[leftIndex].file;
+      right.src = "images/" + pairings[rightIndex].file;
+      left.alt = pairings[leftIndex].name;
+      right.alt = pairings[rightIndex].name;
+    }
+  
+    // Bubble pop + record logic
+    document.querySelectorAll(".option").forEach(option => {
+      option.addEventListener("click", function (e) {
+        const chosen = this.id === "left-img" ? pairings[leftIndex].name : pairings[rightIndex].name;
+        results[chosen]++;
+  
+        const bubble = document.createElement("div");
+        bubble.className = "bubble-cursor";
+        bubble.style.left = e.pageX + "px";
+        bubble.style.top = e.pageY + "px";
+        document.body.appendChild(bubble);
+        setTimeout(() => bubble.remove(), 500);
+  
+        showNewPair();
+      });
+    });
+  </script>
+  

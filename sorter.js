@@ -2,14 +2,14 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
 const supabaseUrl = 'https://bjsfuzlsunepfbezniey.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqc2Z1emxzdW5lcGZiZXpuaWV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkxMzYwMzMsImV4cCI6MjA2NDcxMjAzM30.-kjszBCPdEJHiFcFTQqLh0TUgmSj3Jo4oOb0rH336vI';
+const supabaseKey = 'YOUR_PUBLIC_API_KEY';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 let pairings = [];
 let currentIndex = 0;
 let results = {};
 
-// ✅ Ambil parameter dari URL (username & link)
+// Ambil dari URL
 const params = new URLSearchParams(window.location.search);
 localStorage.setItem("username", params.get("u") || "anonymous");
 localStorage.setItem("submission_link", params.get("s") || "");
@@ -60,22 +60,16 @@ async function showNextPair() {
   }
 
   const [leftPair, rightPair] = pairings[currentIndex];
-
-  // ✅ Harus di dalam sini 
   const left = document.getElementById("left-img");
   const right = document.getElementById("right-img");
 
-  if (left && right) {
-    left.src = `images/${leftPair.file}`;
-    left.alt = leftPair.name;
-    right.src = `images/${rightPair.file}`;
-    right.alt = rightPair.name;
+  left.src = `images/${leftPair.file}`;
+  left.alt = leftPair.name;
+  right.src = `images/${rightPair.file}`;
+  right.alt = rightPair.name;
 
-    document.getElementById("left-option").onclick = () => choose(leftPair.name);
-    document.getElementById("right-option").onclick = () => choose(rightPair.name);
-  } else {
-    console.error("Image elements not found");
-  }
+  document.getElementById("left-option").onclick = () => choose(leftPair.name);
+  document.getElementById("right-option").onclick = () => choose(rightPair.name);
 }
 
 function choose(name) {
@@ -84,5 +78,4 @@ function choose(name) {
   showNextPair();
 }
 
-// ✅ Start
 loadPairings();

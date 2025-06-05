@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RPS Result</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Styling khusus untuk result.html */
+    body.main { /* Pastikan body di result.html menggunakan class "main" */
+      background-image: url('images/Main-background.jpg'); /* Menggunakan background yang sama dengan index.html jika diinginkan */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start; /* Mengatur konten mulai dari atas */
+      padding-top: 40px; /* Jarak dari atas */
+    }
+
+    .ranking-container {
+      background: rgba(255, 255, 255, 0.8); /* Latar belakang semi-transparan */
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      max-width: 500px;
+      width: 90%;
+      margin-top: 40px; /* Jarak dari atas */
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #e88a67; /* Warna judul yang sama dengan sorter.html */
+      margin-bottom: 30px;
+      background: none; /* Hilangkan background default h1 dari style.css */
+      padding: 0;
+      display: block;
+    }
+
+    #ranking-list {
+      list-style: none; /* Hilangkan bullet default */
+      padding: 0;
+      margin: 0;
+    }
+
+    #ranking-list li {
+      display: flex;
+      align-items: center;
+      background-color: #ffffff;
+      border: 2px solid #ffafbd; /* Border seperti di screenshot kedua */
+      border-radius: 12px;
+      margin-bottom: 15px; /* Jarak antar item */
+      padding: 15px 25px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      font-size: 1.2rem;
+      color: #333;
+      font-weight: 600;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    #ranking-list li:hover {
+      transform: translateY(-3px); /* Efek sedikit naik saat hover */
+    }
+
+    .rank-number {
+      font-size: 1.6rem; /* Ukuran angka rank */
+      font-weight: 700;
+      color: #ff8c6b; /* Warna angka rank */
+      margin-right: 15px;
+      min-width: 30px; /* Pastikan ada ruang untuk angka dua digit */
+      text-align: right;
+    }
+
+    .star {
+      color: gold;
+      font-size: 1.4rem;
+      margin-right: 10px;
+      /* Animasi berkedip atau berputar jika diinginkan */
+      /* animation: twinkle 1s infinite alternate; */
+    }
+
+    @keyframes twinkle {
+        from { opacity: 1; }
+        to { opacity: 0.7; }
+    }
+
+    .rank-text {
+      flex-grow: 1; /* Agar teks mengisi sisa ruang */
+      text-align: left;
+      color: #555; /* Warna teks nama */
+    }
+
+    @media (max-width: 768px) {
+      .ranking-container {
+        padding: 20px 25px;
+        margin-top: 20px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      #ranking-list li {
+        padding: 12px 20px;
+        font-size: 1.1rem;
+      }
+      .rank-number {
+        font-size: 1.4rem;
+        margin-right: 10px;
+      }
+      .star {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body class="main">
+  <h1>Your NCT WISH Ranking!</h1>
+  <div class="ranking-container">
+    <ol id="ranking-list"></ol> </div>
+
+  <script>
+    const results = JSON.parse(localStorage.getItem("pairResults")) || [];
+
+    // Jika pairResults menyimpan hanya nama-nama yang diurutkan,
+    // kita perlu menghitung frekuensinya secara terpisah
+    // Jika pairResults sudah menyimpan frekuensi, logika di bawah akan sedikit berbeda.
+    // Asumsi: pairResults adalah array of names, diurutkan dari sorter.js.
+
+    // Sorter.js mengirimkan array nama yang sudah diurutkan berdasarkan skor.
+    // Contoh: ["Syonkul", "Onyut", "Syonkul", "Daengkul"]
+    // Jika ini yang dikirim:
+    // const sortedUniqueNames = Array.from(new Set(results)); // Untuk mendapatkan nama unik sesuai urutan kemenangan
+    //
+    // Namun, sorter.js Anda sebenarnya mengirimkan `Object.entries(results).sort((a, b) => b[1] - a[1]).map(entry => entry[0]);`
+    // Ini berarti `results` di `result.html` sudah berupa array nama yang sudah diurutkan berdasarkan skor tertinggi.
+    // Jadi, kita bisa langsung menggunakannya.
+
+    const list = document.getElementById("ranking-list");
+    results.forEach((name, i) => { // results di sini sudah array of names terurut
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <span class="rank-number">${i + 1}.</span>
+        <span class="star">⭐</span>
+        <span class="rank-text">${name.toUpperCase()}</span>
+      `;
+      list.appendChild(li);
+    });
+  </script>
+</body>
+</html>

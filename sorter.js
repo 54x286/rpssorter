@@ -25,8 +25,9 @@ function shuffle(array) {
 
 function showNextPair() {
   if (currentIndex >= pairings.length) {
-    // Sort the results object by value
-    const sorted = Object.entries(results).sort((a, b) => b[1] - a[1]).map(entry => entry[0]);
+    const sorted = Object.entries(results)
+      .sort((a, b) => b[1] - a[1])
+      .map(entry => entry[0]);
     localStorage.setItem("pairResults", JSON.stringify(sorted));
     window.location.href = "result.html";
     return;
@@ -34,14 +35,23 @@ function showNextPair() {
 
   const [leftPair, rightPair] = pairings[currentIndex];
 
-  const left = document.getElementById("left-img");
-  const right = document.getElementById("right-img");
+  const leftImg = document.getElementById("left-img");
+  const rightImg = document.getElementById("right-img");
 
-  left.src = `images/${leftPair.file}`;
-  left.alt = leftPair.name;
-  right.src = `images/${rightPair.file}`;
-  right.alt = rightPair.name;
+  const leftLabel = document.getElementById("left-label");
+  const rightLabel = document.getElementById("right-label");
 
+  // Update images
+  leftImg.src = `images/${leftPair.file}`;
+  leftImg.alt = leftPair.name;
+  rightImg.src = `images/${rightPair.file}`;
+  rightImg.alt = rightPair.name;
+
+  // Update labels
+  leftLabel.textContent = leftPair.name;
+  rightLabel.textContent = rightPair.name;
+
+  // Set click events
   document.getElementById("left-option").onclick = () => choose(leftPair.name);
   document.getElementById("right-option").onclick = () => choose(rightPair.name);
 }
